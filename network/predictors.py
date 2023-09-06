@@ -59,6 +59,7 @@ class DetectorPredictor:
 
         t0 = time.time()
         
+        np.save('img.npy', images[0])
 
         grid_confidences_pred_np, grid_vals_pred_np, grid_kpts_pred_np, ssd_confidences_pred, ssd_vals_pred, ssd_boxes_pred = pred_detector_features(self.model, image_torch, self.priors, w, h, scale, center_variance, size_variance)
 
@@ -133,6 +134,11 @@ def pred_detector_features(model, image_torch, priors, w, h, scale, center_varia
 
     # corners
     grid_priors = priors['grid_priors_list'][0]
+
+    np.save('init_masks_pred.npy', init_masks_pred.cpu().data.numpy())
+    np.save('grid_confidences_pred.npy', grid_confidences_pred.cpu().data.numpy())
+    np.save('grid_locations_pred.npy', grid_locations_pred.cpu().data.numpy())
+    np.save('grid_vals_pred.npy', grid_vals_pred.cpu().data.numpy())
     
     grid_confidences_pred = reshape_features(grid_confidences_pred)
     grid_locations_pred = reshape_features(grid_locations_pred)
@@ -148,6 +154,9 @@ def pred_detector_features(model, image_torch, priors, w, h, scale, center_varia
     grid_vals_pred_np = grid_vals_pred.cpu().data.numpy()
     grid_kpts_pred_np = grid_kpts_pred.cpu().data.numpy()
 
+    np.save('grid_confidences_pred_np.npy', grid_confidences_pred_np)
+    np.save('grid_vals_pred_np.npy', grid_vals_pred_np)
+    np.save('grid_kpts_pred_np.npy', grid_kpts_pred_np)
 
 
     # center and bbox
